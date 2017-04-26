@@ -14,4 +14,4 @@ The documentation is very thorough and includes every step taken as much for my 
 
 
 ## Testing Jerkyll
-[testlink]{% link SETUP.md %}
+[Link to a page]({{ site.baseurl }}{% link SETUP.md %})
