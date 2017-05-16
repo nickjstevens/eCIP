@@ -1,0 +1,148 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Product COD Values</title>
+    <!-- bootstrap -->
+    <link href="{% static 'app/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" >
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.css"/>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.15/datatables.min.js"></script>
+
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{% static 'app/js/bootstrap.min.js' %}"></script>
+
+<script>
+var endpoint = '/api/product/'
+var labels = []
+var values = []
+
+
+
+$.ajax({
+    method: "GET",
+    url: endpoint,
+    success: function(data){
+        for (i = 0; i < data.length; i++) {
+            labels.push(data[i].product_text);
+            values.push(data[i].product_COD);
+        }
+        //console.log(labels)
+        //console.log(values)
+
+        var ctx = document.getElementById("myChart");
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'COD [mg/l]',
+                    data: values,
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderColor: 'rgba(255,99,132,1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            autoSkip: false
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }]
+                }
+            }
+        });
+
+
+    },
+    error: function(error_data){
+        console.log("error")
+        console.log(error_data)
+    }
+})
+
+
+
+</script>
+
+
+
+<script>
+    $(document).ready(function() {
+        $('#tableCOD').DataTable();
+    } );
+
+</script>
+
+     <div class="container theme-showcase" role="main">
+
+      <!-- Main jumbotron for a primary marketing message or call to action -->
+      <div class="jumbotron">
+        <h1>Nick's Web App</h1>
+        <p>This is test web app using Django and styled with Bootstrap.</p>
+      </div>
+
+
+      <div class="page-header">
+        <h1>Product COD Values</h1>
+      </div>
+
+      <div class="row">
+
+          <div class="col-sm-6">
+  <table id="tableCOD" class="table table-hover">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>COD</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for product in all_products %}
+            <tr>
+                <td>
+                    {{product.product_text}}
+                </td>
+                <td>
+                    {{product.product_COD}}
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+
+
+          </div><!-- /.col-sm-6 -->
+          <div class="col-sm-6">
+              <canvas id="myChart" width="400" height="400"></canvas>
+
+            </div>
+      </div>
+
+
+    </div>
+
+
+</body>
+</html>
