@@ -58,15 +58,3 @@ The documentation is very thorough and includes every step taken as much for my 
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 * create serializers.py file that serializes are models using hte rest framework
 
-
-
-
-
-
-## Testing Jerkyll
-[Link to a page]({{ site.baseurl }}{% link SETUP.md %})
-
-[a relative link](SETUP.md)
-
-
-
