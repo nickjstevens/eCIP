@@ -25,7 +25,7 @@ SECRET_KEY = '7@w69y(17k10@!*_bddkq+^cw11f7r7#h_%x5ug1czi#$b%p27'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [u'nickjstevens.pythonanywhere.com']
 
 
 # Application definition
@@ -77,10 +77,15 @@ WSGI_APPLICATION = 'eCIP.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'nickjstevens$django_eCIP',
+        'USER': 'nickjstevens',
+        'PASSWORD':'django_eCIP_password',
+        'HOST': 'nickjstevens.mysql.pythonanywhere-services.com',
+        'PORT': '',
     }
 }
+
 
 
 # Password validation
@@ -119,6 +124,14 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+STATIC_URL = '/static/'
+
+
+# default static files settings for PythonAnywhere.
+# see https://help.pythonanywhere.com/pages/DjangoStaticFiles for more info
+MEDIA_ROOT = u'/home/nickjstevens/django_apps/eCIP/app/media'
+MEDIA_URL = '/media/'
+STATIC_ROOT = u'/home/nickjstevens/django_apps/eCIP/app/static'
 STATIC_URL = '/static/'
 
 
